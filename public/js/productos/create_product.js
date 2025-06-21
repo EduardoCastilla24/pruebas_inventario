@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log(scriptUrl); // Loguear la URL para verificar si está correctamente formada
             console.log(data); // Loguear la URL para verificar si está correctamente formada
 
-            fetch(scriptUrl, { method: "GET" })
+            fetch(`${scriptUrl}?action=create_product&producto=${encodeURIComponent(serializedData)}`, { method: "GET" })
                 .then((response) => {
                     if (!response.ok) {
                         throw new Error(`Error en la petición: ${response.status}`);

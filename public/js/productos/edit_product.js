@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
         Close_Modal('modal_product_edit', 'form_modal_product_edit')
         Notiflix.Loading.pulse();
 
-        fetch(scriptUrl, { method: "GET" })
+        fetch(`${scriptUrl}?action=edit_product&producto=${encodeURIComponent(serializedData)}`, { method: "GET" })
         .then(response => response.json())
         .then(response => {
             Notiflix.Loading.remove();

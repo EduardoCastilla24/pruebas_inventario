@@ -1,0 +1,36 @@
+@import "tailwindcss";
+@import './components/table.css';
+@import './components/forms.css';
+@import './components/modal.css';
+
+body, html {
+    @apply !m-0 !p-0 box-content;
+}
+
+button{
+    @apply py-2 px-4 rounded-lg text-sm transition-all duration-200 ease-in-out hover:scale-[1.02] hover:-translate-y-1 cursor-pointer;
+}
+
+.main {
+    display: grid !important;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 0px;
+}
+
+aside {
+    grid-row: span 5 / span 5;
+
+}
+
+.content {
+    grid-column: span 7 / span 7;
+    grid-row: span 5 / span 5;
+    @apply w-full !h-full 2xl:pl-[14%] col-span-8 2xl:col-span-7
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

@@ -1,0 +1,48 @@
+---
+import CardUser from '../CardUser.astro';
+import SidebarLink from './Sidebar_Link.astro';
+import { SignedIn, SignOutButton } from '@clerk/astro/components'
+
+const user = await Astro.locals.currentUser()
+const userRole = user?.publicMetadata?.role;
+---
+
+<aside id="sidebar" class="shadow-md fixed w-[16rem] z-30 bg-white xl:w-56 min-h-screen h-full -translate-x-[80rem] 2xl:-translate-x-0 transition-transform duration-300 py-4" aria-label="Sidebar">
+
+    <div class="h-fit px-3 flex flex-col gap-8 py-4 overflow-y-auto">
+        <span class="mt-4 flex items-center justify-center">
+            <img class="h-12" src="/assets/logo/inventario_logo.png" alt="">
+        </span>
+        <ul class="space-y-2 font-medium">
+            {userRole === 'admin' && (
+                <>
+                    <SidebarLink title="Inicio">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-smart-home">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M19 8.71l-5.333 -4.148a2.666 2.666 0 0 0 -3.274 0l-5.334 4.148a2.665 2.665 0 0 0 -1.029 2.105v7.2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-7.2c0 -.823 -.38 -1.6 -1.03 -2.105" />
+                            <path d="M16 15c-2.21 1.333 -5.792 1.333 -8 0" />
+                        </svg>
+                    </SidebarLink>
+                    <SidebarLink title="Productos">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-paperclip">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M15 7l-6.5 6.5a1.5 1.5 0 0 0 3 3l6.5 -6.5a3 3 0 0 0 -6 -6l-6.5 6.5a4.5 4.5 0 0 0 9 9l6.5 -6.5" />
+                        </svg>
+                    </SidebarLink>
+                </>
+            )}
+            <SidebarLink title="Proformas">
+                <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-category-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 4h6v6h-6z" /><path d="M4 14h6v6h-6z" /><path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M7 7m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /></svg>
+            </SidebarLink>
+        </ul>
+    </div>
+
+    <div class="absolute bottom-12 flex flex-col w-full gap-2 px-5">
+        <CardUser></CardUser>
+        <SignedIn>
+            <SignOutButton class:list={"text-[#2c4382] border border-[#2c4382] px-3  !w-full"}>
+                Cerrar Sesión
+            </SignOutButton>
+        </SignedIn>
+    </div>
+</aside>

@@ -1,0 +1,166 @@
+---
+    import Modal from "../components/Modal/Modal.astro";
+    import Main from "../layouts/Main.astro";
+---
+
+<Main title="Productos">
+
+    <section class="px-10 h-[45rem] max-h-[45rem]" id="tableContainer">
+        <div class="relative items-center block w-full h-full bg-white p-6 border !border-gray-200 rounded-lg">
+            <div
+                role="status"
+                class="absolute flex flex-col gap-4 items-center justify-center -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2"
+            >
+                <svg
+                    aria-hidden="true"
+                    class="w-8 h-8 text-gray-200 animate-spin fill-gray-500"
+                    viewBox="0 0 100 101"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    ><path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor"></path><path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill"></path></svg
+                >
+                <p class="text-sm animate-pulse">Cargando datos...</p>
+            </div>
+        </div>
+    </section>
+    <!-- Crear Producto -->
+    <Modal title="Crear Producto" id="modal_product" form_id="form_modal_product">
+        <div class="input_container !col-span-2">
+            <label for='cod_producto'>Cod. de Producto</label>
+            <input type="text" name='cod_producto' id='cod_producto' autofocus/>
+        </div>
+        <div class="input_container !col-span-2">
+            <label for='fecha_ingreso'>Fecha de Ingreso</label>
+            <input type="date" name='fecha_ingreso' id='fecha_ingreso' />
+        </div>
+        <div class="input_container">
+            <label for='nombre_producto'>Producto</label>
+            <input type="text" name='nombre_producto' id='nombre_producto' />
+        </div>
+        <div class="input_container !col-span-2">
+            <label for='marca'>Marca</label>
+            <input type="text" name='marca' id='marca' />
+        </div>
+        <div class="input_container !col-span-2">
+            <label for='unidad'>Unidad</label>
+            <select name="unidad" id="unidad">
+                <option value="UND">UND</option>
+                <option value="CJX6">CJX6</option>
+                <option value="CJX12">CJX12</option>
+            </select>
+        </div>
+        <div class="input_container !col-span-2">
+            <label for='precio_mayorista'>Prec. Mayorista</label>
+            <input type="number" name='precio_mayorista' id='precio_mayorista'  step=".01" />
+        </div>
+        <div class="input_container !col-span-2">
+            <label for='precio_minorista'>Prec- Minorista</label>
+            <input type="number" name='precio_minorista' id='precio_minorista'  step=".01" />
+        </div>
+        <div class="input_container !col-span-2">
+            <label for='stock'>Stock</label>
+            <input type="number" name='stock' id='stock' />
+        </div>
+        <div class="input_container !col-span-2">
+            <label for='estado'>Estado</label>
+            <input type="text" name='estado' id='estado' readonly/>
+        </div>
+        <menu class="space-x-2 input_container mt-1">
+            <button
+                type="submit"
+                class="bg-[#2c4382] rounded-md text-white !px-3 !py-2.5 !text-xs"
+                id="btn_submit"
+            >
+                <a>Agregar</a>
+            </button>
+            <button
+                type="button"
+                class="border border-[#2c4382] rounded-md !px-3 !py-2.5 !text-xs"
+                onclick={`Close_Event('modal_product', 'form_modal_product')`}
+            >
+                Cancelar
+            </button>
+        </menu>
+    </Modal>
+    <!-- Editar Producto -->
+    <Modal title="Editar Producto" id="modal_product_edit" form_id="form_modal_product_edit">
+        <div class="input_container !col-span-2">
+            <label for='cod_producto_edit'>Cod. de Producto</label>
+            <input type="number" name='cod_producto_edit' id='cod_producto_edit' readonly />
+        </div>
+        <div class="input_container !col-span-2">
+            <label for='fecha_ingreso_edit'>Fecha de Ingreso</label>
+            <input type="date" name='fecha_ingreso_edit' id='fecha_ingreso_edit' />
+        </div>
+        <div class="input_container">
+            <label for='nombre_producto_edit'>Producto</label>
+            <input type="text" name='nombre_producto_edit' id='nombre_producto_edit' />
+        </div>
+        <div class="input_container !col-span-2">
+            <label for='marca_edit'>Marca</label>
+            <input type="text" name='marca_edit' id='marca_edit' />
+        </div>
+        <div class="input_container !col-span-2">
+            <label for='unidad_edit'>Unidad</label>
+            <select name="unidad_edit" id="unidad_edit">
+                <option value="UND">UND</option>
+                <option value="CJX6">CJX6</option>
+                <option value="CJX12">CJX12</option>
+            </select>
+        </div>
+        <div class="input_container !col-span-2">
+            <label for='precio_mayorista_edit'>Prec. Mayorista</label>
+            <input type="number" name='precio_mayorista_edit' step="0.01" id='precio_mayorista_edit' />
+        </div>
+        <div class="input_container !col-span-2">
+            <label for='precio_minorista_edit'>Prec- Minorista</label>
+            <input type="number" name='precio_minorista_edit' step="0.01" id='precio_minorista_edit' />
+        </div>
+        <div class="input_container !col-span-2">
+            <label for='stock_edit'>Stock</label>
+            <input type="number" name='stock_edit' id='stock_edit' />
+        </div>
+        <div class="input_container !col-span-2">
+            <label for='estado_edit'>Estado</label>
+            <input type="text" name='estado_edit' id='estado_edit' />
+        </div>
+        <menu class="space-x-2 input_container mt-1">
+            <button
+                type="submit"
+                class="bg-[#2c4382] rounded-md text-white !px-3 !py-2.5 !text-xs"
+                id="btn_submit"
+            >
+                <a>Editar</a>
+            </button>
+            <button
+                type="button"
+                class="border border-[#2c4382] rounded-md !px-3 !py-2.5 !text-xs"
+                onclick={`Close_Event('modal_product_edit', 'form_modal_product_edit')`}
+            >
+                Cancelar
+            </button>
+        </menu>
+    </Modal>
+    <!-- Editar Producto -->
+    <Modal title="Filtrar" id="modal_product_filter" form_id="form_modal_product_filter">
+        <div class="input_container !col-span-8">
+            <h4 class="pb-2 text-sm text-gray-400">Marcas</h4>
+        </div>
+        <div class="input_container !col-span-6 flex flex-wrap gap-2" id="marca-chips"></div>
+        <div class="input_container !col-span-8">
+            <h4 class="pb-2 text-sm text-gray-400">Estado</h4>
+        </div>
+        <div class="input_container !col-span-6 flex flex-wrap gap-2" id="estado-chips"></div>
+    </Modal>
+
+</Main>
+
+<script src="/js/productos/productos.js" is:inline></script>
+<script type="module" src="/js/productos/create_product.js" is:inline></script>
+<script type="module" src="/js/productos/edit_product.js" is:inline></script>
+<script type="module" src="/js/productos/delete_product.js" is:inline></script>
+<script type="module" src="/js/productos/scan.js" is:inline></script>

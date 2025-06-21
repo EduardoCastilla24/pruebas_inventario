@@ -1,0 +1,14 @@
+---
+const user = await Astro.locals.currentUser()
+---
+
+<div class="py-4 rounded-lg w-full flex gap-4 items-center justify-start">
+    <img src={user?.imageUrl} alt="Profile" class="w-8 h-8 rounded-lg" />
+
+    <span class="flex flex-col w-full">
+        <div class="flex gap-2 items-center justify-between">
+            <p class="text-xs text-black font-semibold">{user?.fullName}</p>
+        </div>
+        <p class="text-[0.7rem] text-black opacity-60">{user?.emailAddresses[0]?.emailAddress}</p>
+    </span>
+</div>

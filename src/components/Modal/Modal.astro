@@ -1,0 +1,55 @@
+---
+interface Props {
+    title?: string;
+    id: string;
+    form_id: string;
+}
+
+const { id, form_id, title } = Astro.props;
+---
+
+<dialog id={id}>
+    <div>
+        <div class="modal_head">
+            <h3>{title}</h3>
+            <button
+                class="cancel"
+                onclick={`Close_Event('${id}', '${form_id}')`}
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-x"
+                    ><path stroke="none" d="M0 0h24v24H0z" fill="none"
+                    ></path><path d="M18 6l-12 12"></path><path d="M6 6l12 12"
+                    ></path></svg
+                >
+            </button>
+        </div>
+        <form
+            method="POST"
+            class="form_element"
+            id={form_id}
+            enctype="multipart/form-data"
+        >
+                <slot></slot>
+        </form>
+    </div>
+</dialog>
+
+
+<script type="module">
+    import { Close_Modal } from "/js/Modal/Modal.js";
+
+    // Exponer la funci├│n al ├ímbito global
+    window.Close_Event = function Close_Event(id, form_id) {
+        Close_Modal(id, form_id);
+    };
+</script>

@@ -1,0 +1,18 @@
+---
+import { SignedIn, SignedOut } from "@clerk/astro/components";
+import Layout from '../layouts/Layout.astro';
+import Login from '../components/Login.astro';
+import Inicio from './Inicio.astro';
+---
+
+<SignedOut>
+  <Layout title="Bienvenido">
+    <Login />
+  </Layout>
+</SignedOut>
+
+<SignedIn>
+  <Layout title="Inicio">
+    <Inicio />
+  </Layout>
+</SignedIn>

@@ -1,0 +1,22 @@
+---
+interface Props {
+    value?: string;
+    description?: string;
+}
+
+const { value, description } = Astro.props;
+---
+
+<div class="bg-white shadow border border-gray-100 rounded-lg p-4 sm:p-6 xl:p-8 ">
+
+<div class="flex items-center gap-4">
+    <span class="h-12 w-12 bg-[#2c4382] text-white shadow flex items-center justify-center rounded-lg">
+        <slot></slot>
+    </span>
+    <div class="flex-shrink-0 flex flex-col gap-2">
+        <span class="text-xl leading-none font-bold text-[#2c4382]">{value}</span>
+        <h3 class="text-xs font-normal text-gray-500">{description}</h3>
+    </div>
+</div>
+</div>
+</div>

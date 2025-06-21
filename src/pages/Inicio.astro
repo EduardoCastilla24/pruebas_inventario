@@ -1,0 +1,73 @@
+---
+    import CardInfo from "../components/Dasboard/CardInfo.astro";
+    import Loading from "../components/Loading.astro";
+    import Main from "../layouts/Main.astro";
+
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbwVfdaEo3uCey7ZhOqIoxjZDxr0QqI99IHSQ6yPVCveqnkgGt_o_QwTmuD8gKX_D3_w/exec";
+
+    const [resHoy, resAcumulado, resObsoletos] = await Promise.all([
+        fetch(`${scriptUrl}?action=get_venta_hoy`),
+        fetch(`${scriptUrl}?action=get_venta_acumulada`),
+        fetch(`${scriptUrl}?action=get_obsoletos`)
+    ]);
+
+    const [dataHoy, dataAcumulado, dataObsoletos] = await Promise.all([
+    resHoy.json(),
+    resAcumulado.json(),
+    resObsoletos.json()
+    ]);
+
+    const venta_hoy = dataHoy.total_hoy;
+    const total_acumulado = dataAcumulado.total_acumulado;
+    const obsoletos = dataObsoletos.obsoletos.length;
+---
+
+<Main title="Inicio">
+    <div class="px-4 h-[calc(100%-5rem)] pb-4 space-y-4">
+        <!-- CARDS -->
+        <div class=" w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <CardInfo value={`S/ ${venta_hoy}`} description="Ventas realizadas Hoy">
+                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-report-money"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M14 11h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" /><path d="M12 17v1m0 -8v1" /></svg>                
+            </CardInfo>
+            <CardInfo value={`S/. ${total_acumulado}`} description="Total de ventas acumuladas">
+                <svg  xmlns="http://www.w3.org/2000/svg"  width="26"  height="26"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-ruler-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 3l4 4l-14 14l-4 -4z" /><path d="M16 7l-1.5 -1.5" /><path d="M13 10l-1.5 -1.5" /><path d="M10 13l-1.5 -1.5" /><path d="M7 16l-1.5 -1.5" /></svg>
+            </CardInfo>
+            <CardInfo value=`${obsoletos} productos`  description="En estado de Obsoletos">
+                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-notebook-off"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 4h9a2 2 0 0 1 2 2v9m-.179 3.828a2 2 0 0 1 -1.821 1.172h-11a1 1 0 0 1 -1 -1v-14m4 -1v1m0 4v13" /><path d="M13 8h2" /><path d="M3 3l18 18" /></svg>                
+            </CardInfo>
+        </div>
+        <!-- INFO -->
+        <div class="w-full h-[calc(100%-8rem)] grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4">
+            <!-- GRAPHIC -->
+            <div class="w-full shadow h-fit md:h-full rounded-lg p-4 sm:p-6 xl:p-8 2xl:col-span-2">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex-shrink-0 flex  flex-col gap-4">
+                        <span class="text-xl leading-none font-bold text-gray-900">Ventas Semanales</span>
+                        <h3 class="text-xs font-normal text-gray-500">Ventas de la ultima Semana</h3>
+                    </div>
+                </div>
+                <div class="container_chart min-h-24 lg:h-[calc(100%-5rem)] w-full">
+                    <Loading></Loading>
+                </div>
+            </div>
+            <!-- TABLE -->
+            <div class="bg-white shadow !h-full rounded-lg p-4 sm:p-6 xl:p-8 ">
+                <div class="mb-2 flex flex-col items-start justify-between">
+                    <h3 class="text-xl font-bold text-gray-900">Últimas Ventas</h3>
+                    <div class="flex justify-between w-full items-center">
+                        <span class="text-xs font-normal text-gray-500">Lista de las últimas 5 ventas</span>
+                        <a href="/Proformas" class="text-xs font-medium text-cyan-600 p-2 hover:underline flex gap-2">
+                            Visualizar todas
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="16"  height="16"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-link"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 15l6 -6" /><path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464" /><path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463" /></svg>
+                        </a>
+                    </div>
+                </div>
+                <section class="h-[calc(100%-5rem)]" id="tableContainer">
+                    <Loading></Loading>
+                </section>
+            </div>
+        </div>
+    </div>
+</Main>
+<script src="/js/Dashboard/get_graphic.js" is:inline></script>
+<script src="/js/Dashboard/get_last_proformas.js" is:inline></script>

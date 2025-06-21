@@ -1,0 +1,123 @@
+---
+    import Main from "../../layouts/Main.astro";
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbwVfdaEo3uCey7ZhOqIoxjZDxr0QqI99IHSQ6yPVCveqnkgGt_o_QwTmuD8gKX_D3_w/exec";
+
+    const fetchProformas = async () => {
+        const res = await fetch(`${scriptUrl}?action=read_proformas`);
+        const data = await res.json();
+        return data.data;
+    };
+
+    const proformas = await fetchProformas();
+
+    let newCode = 'B-0001';  // Default value in case there are no proformas
+
+    if (proformas.length > 0) {
+        const lastProforma = proformas[proformas.length - 1];
+        const lastCode = lastProforma.cod_proforma || 'B-0000';
+        const num = parseInt(lastCode.split('-')[1]) + 1;
+        newCode = `B-${num.toString().padStart(4, '0')}`;
+    }
+---
+
+<Main title="Nueva Proforma">
+    <!-- TABLE CONTAINER -->
+    <section class="flex flex-col justify-between w-full gap-x-4 px-10 h-[calc(100%-6rem)]">
+        <div class="flex flex-col gap-8">
+            <form class="grid grid-cols-8 gap-2 sm:gap-4 !mb-0" enctype="multipart/form-data" id="form-newsalida">
+                <div class="col-span-8 input_element sm:col-span-4 border-b pb-3 border-gray-200 mb-4">
+                    <h4 class="text-[#2c4382] font-bold italic">Datos Generales</h4>
+                </div>
+                <div class="col-span-8 input_element sm:col-span-4 border-b pb-3 border-gray-200 mb-4">
+                    <h4 class="text-[#2c4382] font-bold italic">Ingreso de Productos</h4>
+                </div>
+
+                <div class="col-span-8 input_element sm:col-span-1">
+                    <label for="cod_proforma">Cod. Proforma</label>
+                    <input type="text" name="cod_proforma" value={newCode} id="cod_proforma" placeholder="B-0001" readonly>
+                </div>
+                <div class="col-span-8 input_element sm:col-span-2">
+                    <label for="cliente">Cliente</label>
+                    <input type="text" name="cliente" id="cliente" placeholder="Green" >
+                </div>
+                <div class="col-span-8 input_element sm:col-span-1">
+                    <label for="fecha">Fecha</label>
+                    <input type="date" name="fecha" id="fecha" placeholder="Green" >
+                </div>
+                <div class="col-span-8 input_element sm:col-span-3">
+                    <label for="cod_prod">Cod. Producto</label>
+                    <input type="text" name="cod_prod" id="cod_prod" placeholder="S/ 50.00" step=".01" autofocus>
+                </div>
+
+                <div class="flex flex-row !col-span-1 gap-4 mt-4 input_container">
+                    <button type="button" class="bg-[#2c4382] text-white px-3 py-2.5 !w-full" id="añadir">
+                        <a>
+                            Agregar
+                        </a>
+                    </button>
+                </div>
+                </form>
+                <!-- TABLE CONTAINER -->
+                <section class="section--table scroll !mt-6 col-span-8 re">
+                    <!-- TABLE -->
+                    <table class="scroll !w-[100rem] lg:!w-full  !h-full">
+                        <thead>
+                            <th class="!max-w-36 w-36 ">
+                                Cod. Producto
+                            </th>
+                            <th class="max-w-[25rem] w-[25rem] text-center">
+                                Descripción
+                            </th>
+                            <th>
+                                Unidad
+                            </th>
+                            <th>
+                                Cantidad
+                            </th>
+                            <th>
+                                Precio
+                            </th>
+                            <th>
+                                SubTotal
+                            </th>
+                            <th class="!w-[12rem]">
+                                Acciones
+                            </th>
+                        </thead>
+                        <tbody id="List_Proforma"></tbody>
+                    </table>
+                </section>
+        </div>
+        <div class="flex justify-between items-center w-full gap-4 py-2">
+            <div class="flex flex-col items-center justify-between col-span-8 gap-4 my-2 input_element lg:flex-row bottom-9">
+                <article class="flex w-full lg:w-fit lg:flex-row !items-end !justify-between gap-4">
+                    <div class="input_element w-full md:w-fit flex-row items-center gap-4 !my-0">
+                        <label for="subtotal">Sub.</label>
+                        <input type="text" name="subtotal" id="subtotal" class="text-gray-400 bg-gray-50 peer input_container__input" placeholder="S/ 00.00" readonly>
+                    </div>
+                    <div class="input_element w-full md:w-fit flex-row items-center gap-4 !my-0">
+                        <label for="igv">I.G.V</label>
+                        <input type="text" name="igv" id="igv" class="text-gray-400 bg-gray-50 peer input_container__input" placeholder="S/ 00.00" readonly>
+                    </div>
+                    <div class="input_element w-full md:w-fit flex-row items-center gap-4 !my-0">
+                        <label for="total">Total</label>
+                        <input type="text" name="total" id="total" class="text-gray-400 bg-gray-50 peer input_container__input" placeholder="S/ 00.00" readonly>
+                    </div>
+                </article>
+            </div>
+            <div class="flex flex-row justify-end w-full gap-4 py-2 lg:w-fit h-fit">
+                <button type="button" class="bg-[#2c4382] text-white px-3" id="btn_enviar" onclick="import('/js/proformas/productos/add_list.js').then(module => module.Enviar_detalle()); import('/js/proformas/productos/add_list.js').then(module => module.Enviar_Proforma()) ">
+                    <a>
+                        Guardar
+                    </a>
+                </button>
+                <button type="button" class="border border-[#2c4382] px-3">
+                    <a href="/Proformas/nueva-proforma">Cancelar</a>
+                </button>
+            </div>
+        </div>
+    </section>
+</Main>
+
+<script src="/js/proformas/create_proforma.js" type="module" is:inline></script>
+<script src="/js/proformas/productos/add_list.js" type="module" is:inline></script>

@@ -1,0 +1,136 @@
+#dataTable_wrapper{
+    @apply !grid !grid-cols-6
+}
+/* BUTTONS EXPORT */
+.dt-buttons{
+    @apply !flex !p-0 items-center !mr-4 !col-span-3 gap-2 mb-8
+}
+.dt-button{
+    @apply !rounded-md !px-1 !py-0 !text-gray-500
+}
+.dt-button.buttons-pdf, .dt-button.buttons-excel{
+    @apply !border-gray-500 !shadow-md !px-3  text-gray-500
+}
+button.dt-button, div.dt-button, a.dt-button, input.dt-button{
+    @apply !bg-none
+}
+
+table {
+    @apply !col-span-6 !border-slate-100;
+}
+
+/* ARROWS TH */
+th.sorting::before,
+th.sorting::after {
+    @apply !opacity-100 !text-[.8rem];
+}
+table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control:before,
+table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control:before {
+    @apply !bg-gray-900 !text-lg flex items-center justify-center;
+}
+
+th.sorting,
+th {
+    @apply text-[#1a1a1a] opacity-90 tracking-wider !text-center text-sm h-[5rem] !border-y !border-slate-200 !bg-[#fcfcfc] hover:cursor-pointer;
+}
+.dataTables_length {
+    float: bottom !important;
+}
+
+/* INFORMATION BOTTOM */
+.dataTables_info {
+    @apply !flex !text-xs !font-normal !text-gray-400 !col-span-3 !my-8;
+}
+/* PAGINATION */
+.dataTables_paginate {
+    @apply !flex !col-span-3 !justify-end !gap-1 !items-center  !my-8;
+}
+.dataTables_paginate > a {
+    @apply !text-xs !cursor-pointer hover:!bg-gray-100 !text-gray-400 !py-1.5 !bg-white !px-1.5 !border !border-gray-200 !mx-0;
+}
+.dataTables_paginate #dataTable_previous {
+    @apply !rounded-l-lg;
+}
+.dataTables_paginate #dataTable_next {
+    @apply !rounded-r-lg;
+}
+.dataTables_paginate > span {
+    @apply !bg-white  !rounded-md !border-gray-200 !h-full;
+}
+.dataTables_paginate > span > a {
+    @apply !text-xs !cursor-pointer hover:!bg-gray-100 !bg-none !font-medium !rounded-none !border !border-gray-200 !h-full  !px-3 !py-1.5 !text-gray-400;
+}
+
+.dataTables_empty {
+    @apply !text-center align-middle text-xs text-[#1a1a1a] opacity-55 tracking-wide  !border-slate-100;
+}
+
+table.dataTable.display > tbody > tr.odd > * {
+    @apply !shadow-none;
+}
+
+/* BUTTONS TOP RIGTH */
+.dataTables_filter {
+    @apply !col-span-6 md:!col-span-3 !flex !justify-end items-center !mb-10 gap-10;
+}
+
+.dataTables_filter > label {
+    @apply !w-full;
+}
+.dataTables_filter > label > input {
+    @apply !shadow-sm !h-fit  !bg-white !border !border-gray-300 !text-gray-900 !text-[.7rem] sm:!text-sm !rounded-md  focus:!border-gray-500 !w-full !py-2.5  !px-2.5 outline-none !pr-14;
+}
+
+tr {
+    @apply text-sm text-center text-[#131313] opacity-70 !h-16;
+}
+
+table.dataTable.row-border tbody th,
+table.dataTable.row-border tbody td,
+table.dataTable.display tbody th,
+table.dataTable.display tbody td {
+    @apply !border-b !border-slate-100;
+}
+
+.even:hover .sorting_1,
+table.dataTable.display > tbody > tr.even > .sorting_1,
+table.dataTable.order-column.stripe > tbody > tr.even > .sorting_1,
+table.dataTable.display > tbody > tr.even > .sorting_1,
+table.dataTable.order-column.stripe > tbody > tr.even > .sorting_1 {
+    @apply !shadow-none !drop-shadow-none;
+}
+.even,
+.odd {
+    @apply !bg-white hover:!bg-[#fafafd] !shadow-none !drop-shadow-none;
+}
+
+.btn_dataTable {
+    @apply text-white rounded-md hover:scale-[1.02] transition-all relative duration-300 ease-in-out hover:-translate-y-0.5 flex;
+}
+.btn_dataTable > a {
+    @apply !p-2 !py-1;
+}
+.btn_dataTable > a > i {
+    @apply !p-0 !m-0;
+}
+/*QUITAR EL SHADOW A LOS TR*/
+table.dataTable.hover > tbody > tr:hover > *,
+table.dataTable.display > tbody > tr:hover > * {
+    @apply !shadow-none;
+}
+
+table.dataTable > tbody > tr.child ul.dtr-details {
+    @apply !w-full !flex  !flex-wrap;
+}
+table.dataTable > tbody > tr.child ul.dtr-details > li {
+    @apply !min-w-[50%];
+}
+table.dataTable
+    > tbody
+    > tr.child
+    ul.dtr-details
+    > li
+    > span.dtr-data
+    > div {
+    @apply !text-xs !mt-2;
+}
